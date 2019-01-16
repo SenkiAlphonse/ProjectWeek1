@@ -30,10 +30,6 @@ public class Todo {
 
 
     public Todo () {
-        this.title = "untitled";
-        this.urgent = false;
-        this.done = false;
-        this.assignee = null;
     }
 
     public Todo(String title) {

@@ -49,12 +49,14 @@ public class TodoController {
     @PostMapping(value = "/todo/add",
             consumes= MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addTodo (@ModelAttribute(value="new_todo") Todo newTodo){
+        newTodo.setUrgent(false);
+        newTodo.setDone(false);
         this.todoSvc.addTodo(newTodo);
         return "redirect:/todo";
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteTodo (@PathVariable long id) {
+    public String deleteTodo (@PathVariable Long id) {
         todoSvc.deleteTodo(todoSvc.getAll().stream()
             .filter(todo -> todo.getId()==id)
             .findAny()
@@ -66,7 +68,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}/edit")
-    public String todoEditor (@PathVariable long id, Model model) {
+    public String todoEditor (@PathVariable Long id, Model model) {
 
         model.addAttribute("todo", todoSvc.getTodoById(id));
         model.addAttribute("assignees", assSvc.getAll());
@@ -74,8 +76,9 @@ public class TodoController {
     }
 
     @PostMapping(value = "/{id}/edit")
-    public String updateTodo (long assigneeid, @ModelAttribute Todo todo) {
+    public String updateTodo (Long assigneeid, @ModelAttribute Todo todo) {
         todo.setAssignee(assSvc.getAssigneeById(assigneeid));
+
         todoSvc.addTodo(todo);
         return "redirect:/todo";
     }
