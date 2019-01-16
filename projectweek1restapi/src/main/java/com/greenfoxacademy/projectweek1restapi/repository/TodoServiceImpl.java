@@ -1,6 +1,7 @@
 package com.greenfoxacademy.projectweek1restapi.repository;
 
 
+import com.greenfoxacademy.projectweek1restapi.controller.TodoDto;
 import com.greenfoxacademy.projectweek1restapi.model.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TodoServiceImpl {
+public class TodoServiceImpl implements TodoService {
 
     TodoRepository repository;
 
@@ -47,4 +48,15 @@ public class TodoServiceImpl {
         this.repository.deleteById(id);
     }
 
+    @Override
+    public Todo todoFromDto(TodoDto todoDto) {
+        Todo newTodo = new Todo(todoDto.title);
+        newTodo.setDone(todoDto.done);
+        newTodo.setUrgent(todoDto.urgent);
+        return newTodo;
+    }
+
+    public Todo findLastTodoAdded(){
+        return repository.findAllByOrderByIdDesc().stream().findFirst().get();
+    }
 }

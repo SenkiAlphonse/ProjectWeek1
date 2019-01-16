@@ -1,14 +1,13 @@
 package com.greenfoxacademy.projectweek1restapi.controller;
 
+import com.greenfoxacademy.projectweek1restapi.model.Todo;
 import com.greenfoxacademy.projectweek1restapi.repository.AssigneeServiceImpl;
 import com.greenfoxacademy.projectweek1restapi.repository.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -45,5 +44,10 @@ public class TodoRestController {
     }
 
     @PostMapping("/api/todo/add")
-    public ResponseEntity addNewTodoJson(){@RequestBody }
+    public ResponseEntity addNewTodoJson(@RequestBody TodoDto todoDto){
+        if (todoDto != null) {
+            todoSvc.addTodo(todoSvc.todoFromDto(todoDto));
+        }
+        return new ResponseEntity(todoSvc.findLastTodoAdded(), HttpStatus.OK);
+    }
 }
