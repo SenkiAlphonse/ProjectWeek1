@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -25,9 +26,10 @@ public class TodoRestController {
     }
 
     @GetMapping("/api/todo")
-    public ArrayList<Object> list(Model model, @RequestParam(required=false) boolean isActive) {
+    public ArrayList<TodosListDto> list(Model model, @RequestParam(required=false) boolean isActive) {
 
-        ArrayList<Object> todos = new ArrayList<>();
+        ArrayList<Todo> todos = new ArrayList<>();
+        ArrayList<TodosListDto> dtos = new ArrayList<>();
 
         if(isActive) {
 
@@ -39,7 +41,10 @@ public class TodoRestController {
         else {
             todoSvc.getAll().forEach(todos::add);
         }
-        return todos;
+        for (Todo todo : todos) {
+            dtos.add(todoSvc.todoToListDto(todo));
+        }
+        return dtos;
 
     }
 

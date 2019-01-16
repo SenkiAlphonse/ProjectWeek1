@@ -2,6 +2,7 @@ package com.greenfoxacademy.projectweek1restapi.repository;
 
 
 import com.greenfoxacademy.projectweek1restapi.controller.TodoDto;
+import com.greenfoxacademy.projectweek1restapi.controller.TodosListDto;
 import com.greenfoxacademy.projectweek1restapi.model.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,19 @@ public class TodoServiceImpl implements TodoService {
 
     public Todo findLastTodoAdded(){
         return repository.findAllByOrderByIdDesc().stream().findFirst().get();
+    }
+
+    @Override
+    public TodosListDto todoToListDto(Todo todo) {
+        TodosListDto dto = new TodosListDto();
+        dto.id = todo.getId();
+        dto.title = todo.getTitle();
+        dto.urgent = todo.isUrgent();
+        dto.done = todo.isDone();
+        if (todo.getAssignee()!=null) {
+            dto.assignee = todo.getAssignee().getName();
+        }
+
+        return dto;
     }
 }
