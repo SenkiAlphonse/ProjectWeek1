@@ -77,8 +77,8 @@ public class TodoController {
 
     @PostMapping(value = "/{id}/edit")
     public String updateTodo (Long assigneeid, @ModelAttribute Todo todo) {
-        todo.setAssignee(assSvc.getAssigneeById(assigneeid));
-
+        if(assigneeid!=null){
+        todo.setAssignee(assSvc.getAssigneeById(assigneeid));}
         todoSvc.addTodo(todo);
         return "redirect:/todo";
     }
