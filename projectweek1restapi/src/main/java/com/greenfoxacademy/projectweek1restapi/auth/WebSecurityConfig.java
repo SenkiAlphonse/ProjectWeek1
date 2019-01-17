@@ -1,4 +1,4 @@
-package com.greenfoxacademy.projectweek1restapi.auth;
+/*package com.greenfoxacademy.projectweek1restapi.auth;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +16,7 @@ public class WebSecurityConfig extends
                 .xssProtection().xssProtectionEnabled(false);
 
     }
-}
+} */
 
 
 /*package com.greenfoxacademy.projectweek1restapi.auth;
